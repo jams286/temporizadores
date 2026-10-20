@@ -1,0 +1,187 @@
+:root {
+  --fondo: #fbf6ee;
+  --superficie: #ffffff;
+  --tinta: #2a2420;
+  --tinta-suave: #6f645b;
+  --linea: #e8dfd2;
+  --acento: #d9622b;
+  --acento-tinta: #ffffff;
+  --pausa: #8a7f74;
+  --alarma: #c62828;
+  --fuente: "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--tinta);
+  font-family: var(--fuente);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+
+.visualmente-oculto {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.pagina {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+h1 { margin: 4px 0 18px; font-size: 1.9rem; }
+
+.activar-sonido {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 14px;
+  border: 2px dashed var(--acento);
+  border-radius: 14px;
+  background: #fff3eb;
+  font-weight: 700;
+}
+
+/* ---------- Nuevo ---------- */
+
+.nuevo {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--superficie);
+  border: 1px solid var(--linea);
+}
+
+.campo { display: grid; gap: 6px; }
+.etiqueta { font-size: 0.9rem; font-weight: 700; color: var(--tinta-suave); }
+
+input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--linea);
+  border-radius: 12px;
+  background: var(--fondo);
+  font-size: 1.1rem;
+}
+input:focus { outline: 2px solid var(--acento); outline-offset: 1px; }
+
+.rapidos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+  gap: 8px;
+}
+.rapidos button {
+  padding: 14px 6px;
+  border: none;
+  border-radius: 12px;
+  background: #f4e6d6;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+.rapidos button:active { background: #ecd5bb; }
+
+.personalizado {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 10px;
+  align-items: end;
+}
+
+.boton-principal {
+  padding: 12px 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--acento);
+  color: var(--acento-tinta);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+/* ---------- Lista ---------- */
+
+.vacio { margin: 24px 4px; color: var(--tinta-suave); text-align: center; }
+
+.lista {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.temporizador {
+  padding: 14px 16px 16px;
+  border-radius: 18px;
+  background: var(--superficie);
+  border: 2px solid var(--linea);
+}
+
+.t-cabeza { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.t-nombre { font-weight: 700; font-size: 1.15rem; overflow-wrap: anywhere; }
+.t-quitar {
+  flex: none;
+  width: 36px; height: 36px;
+  border: none; border-radius: 50%;
+  background: transparent;
+  color: var(--tinta-suave);
+  font-size: 1.1rem;
+}
+
+.t-tiempo {
+  margin: 6px 0 10px;
+  font-size: clamp(2.8rem, 12vw, 3.6rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.t-barra { height: 8px; border-radius: 4px; background: var(--linea); overflow: hidden; }
+.t-progreso { height: 100%; width: 0; background: var(--acento); border-radius: 4px; }
+
+.t-acciones { display: flex; gap: 8px; margin-top: 14px; }
+.t-acciones button {
+  flex: 1;
+  padding: 11px 8px;
+  border: none;
+  border-radius: 12px;
+  background: #f4e6d6;
+  font-weight: 700;
+}
+.t-acciones button[hidden] { display: none; }
+
+/* Pausado */
+.temporizador.pausado .t-tiempo { color: var(--pausa); }
+.temporizador.pausado .t-progreso { background: var(--pausa); }
+
+/* Terminado y sonando */
+.temporizador.terminado { border-color: var(--alarma); }
+.temporizador.terminado .t-tiempo { color: var(--alarma); }
+.temporizador.sonando { animation: parpadeo 1s steps(2, jump-none) infinite; }
+.temporizador.sonando .t-detener {
+  background: var(--alarma);
+  color: #fff;
+  font-size: 1.15rem;
+  padding: 14px 8px;
+}
+
+@keyframes parpadeo {
+  from { background: var(--superficie); }
+  to   { background: #ffd9d4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .temporizador.sonando { animation: none; background: #ffd9d4; }
+}
+
+@media (max-width: 420px) {
+  .personalizado { grid-template-columns: 1fr 1fr; }
+  .personalizado .boton-principal { grid-column: 1 / -1; }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fbf6ee">
+  <title>Temporizadores</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="pagina">
+    <h1>Temporizadores</h1>
+
+    <button type="button" class="activar-sonido" id="activar-sonido" hidden>
+      🔈 Toca aquí para activar el sonido de las alarmas
+    </button>
+
+    <section class="nuevo" aria-labelledby="titulo-nuevo">
+      <h2 id="titulo-nuevo" class="visualmente-oculto">Nuevo temporizador</h2>
+
+      <label class="campo">
+        <span class="etiqueta">Nombre (opcional)</span>
+        <input type="text" id="nombre" maxlength="30" placeholder="Arroz, horno, huevos…" autocomplete="off">
+      </label>
+
+      <div class="rapidos" role="group" aria-label="Iniciar rápido">
+        <button type="button" data-min="1">1 min</button>
+        <button type="button" data-min="3">3 min</button>
+        <button type="button" data-min="5">5 min</button>
+        <button type="button" data-min="10">10 min</button>
+        <button type="button" data-min="15">15 min</button>
+        <button type="button" data-min="20">20 min</button>
+        <button type="button" data-min="30">30 min</button>
+        <button type="button" data-min="45">45 min</button>
+        <button type="button" data-min="60">1 hora</button>
+      </div>
+
+      <form class="personalizado" id="personalizado">
+        <label class="campo campo-num">
+          <span class="etiqueta">Min</span>
+          <input type="number" id="minutos" min="0" max="600" inputmode="numeric" placeholder="0">
+        </label>
+        <label class="campo campo-num">
+          <span class="etiqueta">Seg</span>
+          <input type="number" id="segundos" min="0" max="59" inputmode="numeric" placeholder="0">
+        </label>
+        <button type="submit" class="boton-principal">Iniciar</button>
+      </form>
+    </section>
+
+    <section aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista" class="visualmente-oculto">Temporizadores activos</h2>
+      <p class="vacio" id="vacio">No hay temporizadores. Toca un botón de arriba para empezar.</p>
+      <ul class="lista" id="lista"></ul>
+    </section>
+  </main>
+
+  <template id="plantilla">
+    <li class="temporizador">
+      <div class="t-cabeza">
+        <span class="t-nombre"></span>
+        <button type="button" class="t-quitar" data-accion="quitar" aria-label="Quitar">✕</button>
+      </div>
+      <div class="t-tiempo" aria-live="off"></div>
+      <div class="t-barra"><div class="t-progreso"></div></div>
+      <div class="t-acciones">
+        <button type="button" data-accion="pausa"></button>
+        <button type="button" data-accion="mas">+1 min</button>
+        <button type="button" class="t-detener" data-accion="detener">Detener</button>
+        <button type="button" data-accion="repetir">Repetir</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
