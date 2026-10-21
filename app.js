@@ -83,6 +83,32 @@
     setTimeout(actualizarAvisoSonido, 50);
   });
 
+  // ---------- Pantalla encendida ----------
+  // Wake Lock solo existe en HTTPS; por http simplemente no hace nada.
+
+  let bloqueo = null;
+
+  async function mantenerPantalla() {
+    const activos = temporizadores.some((t) => t.estado === "corriendo" || t.sonando);
+    if (!("wakeLock" in navigator)) return;
+    if (activos && !bloqueo && document.visibilityState === "visible") {
+      try {
+        bloqueo = await navigator.wakeLock.request("screen");
+        bloqueo.addEventListener("release", () => {
+          bloqueo = null;
+        });
+      } catch {
+        bloqueo = null; // p. ej. batería baja: se reintenta en el próximo cambio
+      }
+    } else if (!activos && bloqueo) {
+      bloqueo.release();
+      bloqueo = null;
+    }
+  }
+
+  // El navegador suelta el bloqueo al ocultar la pestaña; se pide de nuevo al volver
+  document.addEventListener("visibilitychange", mantenerPantalla);
+
   // ---------- Lógica ----------
 
   function restanteDe(t, ahora = Date.now()) {
@@ -192,6 +218,7 @@
     vacio.hidden = temporizadores.length > 0;
     actualizarTiempos();
     actualizarAvisoSonido();
+    mantenerPantalla();
   }
 
   function actualizarTiempos() {

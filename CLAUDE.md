@@ -16,7 +16,7 @@ Sitio estático, sin frameworks ni paso de build:
 - Cada temporizador guarda su hora de fin (`Date.now()`), así que no se desfasa aunque la pestaña quede en segundo plano.
 - Se guardan en `localStorage` (clave `temporizadores.v1`), o sea, por dispositivo: si se recarga la página siguen corriendo.
 - Los navegadores solo dejan sonar audio después de un toque. Si hay temporizadores corriendo tras recargar, aparece un aviso de "Toca para activar el sonido".
-- No hay Wake Lock (pide HTTPS y el sitio va por http): la tablet debe tener un tiempo de apagado de pantalla largo si se quiere ver la cuenta.
+- Wake Lock: mientras haya temporizadores corriendo o sonando, la pantalla no se apaga (`mantenerPantalla()`, se llama en cada `dibujar()` y al volver a la pestaña). Solo funciona por HTTPS; por http no hace nada.
 - Rutas relativas para que funcione bajo `/temporizadores/`.
 
 ## Dónde se publica
