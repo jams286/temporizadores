@@ -298,6 +298,15 @@
     accion(boton.closest(".temporizador").dataset.id, boton.dataset.accion);
   });
 
+  // Otras tools (p. ej. la cocina) abren /temporizadores/?nombre=Hornear&min=25 para crear uno.
+  // Se limpia la dirección para que recargar no lo vuelva a crear.
+  const parametros = new URLSearchParams(location.search);
+  if (parametros.has("min") || parametros.has("seg")) {
+    const segundos = Math.round((Number(parametros.get("min")) || 0) * 60 + (Number(parametros.get("seg")) || 0));
+    if (segundos > 0 && segundos <= 24 * 3600) crear((parametros.get("nombre") || "").trim().slice(0, 30), segundos);
+    history.replaceState(null, "", location.pathname);
+  }
+
   // Los que terminaron mientras la página estaba cerrada siguen sonando al volver
   dibujar();
   tic();

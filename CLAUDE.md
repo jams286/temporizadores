@@ -6,6 +6,7 @@ Temporizadores de cocina para la familia, usados desde la tablet (vía el hub `i
 
 - Botones rápidos (1, 3, 5, 10, 15, 20, 30, 45 y 60 min) y uno personalizado con nombre, minutos y segundos. Si se escribe un nombre antes de tocar un botón rápido, el temporizador lo usa.
 - Varios temporizadores corriendo a la vez; cada uno se puede pausar, sumar 1 minuto o quitar.
+- Otras tools crean uno abriendo `/temporizadores/?nombre=<texto>&min=<n>` (también `seg`); la cocina lo usa en los pasos de las recetas. Después se limpia la dirección con `history.replaceState` para que recargar no lo duplique.
 - Al terminar: alarma (pitidos con Web Audio) que se repite hasta tocar "Detener", la tarjeta parpadea, vibra si el dispositivo puede y el título de la pestaña avisa.
 
 ## Cómo está hecho
