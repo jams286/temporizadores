@@ -1,5 +1,7 @@
 # temporizadores (casa)
 
+Tracker: temporizadores
+
 Temporizadores de cocina para la familia, usados desde la tablet (vía el hub `infra/home`) y el celular.
 
 ## Qué hace
@@ -22,5 +24,5 @@ Sitio estático, sin frameworks ni paso de build:
 
 ## Dónde se publica
 
-- URL: http://192.168.1.4/temporizadores/
+- URL: https://192.168.1.4/temporizadores/
 - Carpeta: `/var/www/temporizadores/` (de jams, sin sudo). Comando de publicación en el README.
